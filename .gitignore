@@ -3,3 +3,6 @@
 *.gz
 *.db
 *.parquet
+.prefectignore
+mlartifacts/
+*.pyc

@@ -1,0 +1,50 @@
+###
+### A complete description of a Prefect Deployment for flow 'airbnb-flow'
+###
+name: airbnb
+description: The main training pipeline
+version: 68d5101bf4b0ef0129dc57de73837d8e
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {}
+schedule:
+  cron: '0 23 * * *
+
+    '
+  timezone: null
+  day_or: true
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: airbnb-flow
+manifest_path: null
+storage: null
+path: /home/ubuntu/dtc_mlops_course_project
+entrypoint: 03-orchestration.py:airbnb_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    df_path:
+      title: df_path
+      default: NYC-Airbnb-2023.csv
+      position: 0
+      type: string
+  required: null
+  definitions: null
+timestamp: '2023-07-26T19:09:57.441884+00:00'
