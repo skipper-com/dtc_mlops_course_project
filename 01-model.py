@@ -1,12 +1,11 @@
-import pandas as pd
 import pickle
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import Lasso
-from sklearn.linear_model import Ridge
+
 import s3fs
+import pandas as pd
+from sklearn.metrics import mean_squared_error
+from sklearn.linear_model import Lasso, Ridge, LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction import DictVectorizer
 
 
 def read_data(filename: str) -> pd.DataFrame:

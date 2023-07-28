@@ -1,24 +1,23 @@
-import pandas as pd
-import pickle
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import Lasso
-from sklearn.metrics import mean_squared_error
-import mlflow
-from sklearn.model_selection import train_test_split
 import os
-from mlflow.tracking import MlflowClient
+import pickle
+
+import s3fs
+import mlflow
+import pandas as pd
 import xgboost as xgb
-from hyperopt import fmin, tpe, hp, STATUS_OK, Trials
+from hyperopt import STATUS_OK, Trials, hp, tpe, fmin
+from sklearn.svm import LinearSVR
 from hyperopt.pyll import scope
+from mlflow.tracking import MlflowClient
+from sklearn.metrics import mean_squared_error
 from sklearn.ensemble import (
+    ExtraTreesRegressor,
     RandomForestRegressor,
     GradientBoostingRegressor,
-    ExtraTreesRegressor,
 )
-from sklearn.svm import LinearSVR
-import s3fs
-
+from sklearn.linear_model import Lasso, LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction import DictVectorizer
 
 mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("airbnb-price-experiment")
@@ -27,7 +26,7 @@ client = MlflowClient("http://127.0.0.1:5000")
 
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
-    #df = pd.read_csv(f"s3://mlops-course-project/data/{filename}", low_memory=False)
+    # df = pd.read_csv(f"s3://mlops-course-project/data/{filename}", low_memory=False)
     df = pd.read_csv(f"data/{filename}", low_memory=False)
     return df
 

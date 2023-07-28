@@ -1,20 +1,21 @@
-import pathlib
+import json
 import pickle
-import pandas as pd
+import pathlib
+from datetime import date
+
+import s3fs
 import numpy as np
 import scipy
-import sklearn
-from sklearn.feature_extraction import DictVectorizer
-from sklearn.metrics import mean_squared_error
 import mlflow
+import pandas as pd
+import sklearn
 import xgboost as xgb
 from prefect import flow, task
-from prefect.artifacts import create_markdown_artifact
-from datetime import date
-from sklearn.model_selection import train_test_split
-import s3fs
 from mlflow.tracking import MlflowClient
-import json
+from sklearn.metrics import mean_squared_error
+from prefect.artifacts import create_markdown_artifact
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction import DictVectorizer
 
 
 @task(retries=3, retry_delay_seconds=2)

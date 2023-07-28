@@ -95,7 +95,19 @@ Most valuable piece of previous steps is model, which is stored is S# cloud. I c
 5. Then run container ```bash docker run -it --rm -p 9696:9696  listing-price-prediction:v1```
 
 # Model monitoring
-
+Model monitoring also very important part of MLOps project. Maybe most important because directly controls quality of prediction and so usefullnes of service. Following steps describe how can I setup model monitoring for my project:
+1. Firstly, I install evidently and all necessary packages.
+2. Then I divide whole dataset in half (train, validate) and calculate metrics using evidently for validation part.
+3. Baseline report (notebooks/05.ipynb) shows:
+- data drift
+- number of missing data
+- feature correlation
+- prediction drift
+- and model quality
+3. Next step is to build simple monitoring tool to get drifted data. I used docker compose to run PostgreSQL + Adminer + Grafan with command ```bash sudo docker compose up -d``` to prepare environment for monitring.
+4. When the service will work constantly in production initial dataset could be used as reference, then all prediction requests would be dataset to check against reference. Requests could be in batch for a day or for thousand for example (depends on requests per day). I choose reference dataset as first 20 000 records of Airbnb data and simulate 10 batches (binned records) from remaining records.
+5. Then I calculate drift metrics using evidentyl (05-monitoring.py) and put them in database.
+6. Last but not least I created dashbord in Grafana to show drited prediction and number of drifted columns.
 
 # Best Practices
 
