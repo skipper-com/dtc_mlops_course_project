@@ -32,6 +32,7 @@ force-exclude = '''
 | pyproject\.toml
 | Dockerfile
 | Makefile
+| README.md
 '''
 
 [tool.isort]

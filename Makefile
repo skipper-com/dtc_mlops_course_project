@@ -9,7 +9,7 @@ quality_checks:
 	black .
 	pylint --recursive=y .
 
-build: #quality_checks test
+build: quality_checks test
 	docker build -t ${LOCAL_IMAGE_NAME} --build-arg x1="${AWS_ACCESS_KEY_ID}" --build-arg x2="${AWS_SECRET_ACCESS_KEY}" --build-arg x3="${RUN_ID}" .
 
 integration_test:
