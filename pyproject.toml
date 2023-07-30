@@ -7,6 +7,8 @@ disable = [
     "redefined-outer-name",
     "global-variable-undefined",
     "unused-variable",
+    "unused-import",
+    "ungrouped-imports",
 ]
 
 [tool.black]
