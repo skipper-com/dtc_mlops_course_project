@@ -28,8 +28,6 @@ force-exclude = '''
 /(
     scripts
 | integraton-test
-| Dockerfile
-| Makefile
 )/
 | pyproject\.toml
 | Dockerfile
