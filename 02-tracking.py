@@ -1,4 +1,6 @@
-import os
+"""
+Tracking experiments module
+"""
 import pickle
 
 import s3fs
@@ -15,7 +17,7 @@ from sklearn.ensemble import (
     RandomForestRegressor,
     GradientBoostingRegressor,
 )
-from sklearn.linear_model import Lasso, LinearRegression
+from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 
@@ -93,7 +95,9 @@ def test_model(
 
 
 def log_xgb_experiment() -> dict:
-    """"""
+    """
+    Log XGBoost experiment
+    """
     search_space = {
         "max_depth": scope.int(hp.quniform("max_depth", 4, 100, 1)),
         "learning_rate": hp.loguniform("learning_rate", -3, 0),
@@ -116,7 +120,9 @@ def log_xgb_experiment() -> dict:
 
 
 def objective(params) -> dict:
-    """ """
+    """
+    Return XGBoost results
+    """
     with mlflow.start_run():
         mlflow.set_tag("model", "xgboost")
         mlflow.log_params(params)
@@ -135,7 +141,9 @@ def objective(params) -> dict:
 
 
 def log_models_experiments():
-    """"""
+    """
+    Log models experiments
+    """
     for model_class in (
         RandomForestRegressor,
         GradientBoostingRegressor,
@@ -172,9 +180,9 @@ def price_prediction() -> None:
     df_train, df_remain = train_test_split(df, test_size=0.3)
     df_val, df_test = train_test_split(df_remain, test_size=0.3)
 
-    mse_train = train_model(df_train, lr, dv, categorical, numerical, target)
-    mse_val = train_model(df_val, lr, dv, categorical, numerical, target)
-    mse_test = train_model(df_test, lr, dv, categorical, numerical, target)
+    # mse_train = train_model(df_train, lr, dv, categorical, numerical, target)
+    # mse_val = train_model(df_val, lr, dv, categorical, numerical, target)
+    # mse_test = train_model(df_test, lr, dv, categorical, numerical, target)
     print("baseline model successfully trained")
 
     dump_model(lr, dv)
