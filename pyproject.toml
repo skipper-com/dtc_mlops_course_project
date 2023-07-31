@@ -29,6 +29,7 @@ force-exclude = '''
     scripts
 | integraton-test
 | \.terraform
+| modules
 )/
 | pyproject\.toml
 | Dockerfile

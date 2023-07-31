@@ -16,7 +16,7 @@ provider "aws" {
 data "aws_caller_identity" "current_identity" {}
 
 resource "random_string" "random_suffix" {
-  length  = 3
+  length  = 8
   special = false
   upper   = false
 }

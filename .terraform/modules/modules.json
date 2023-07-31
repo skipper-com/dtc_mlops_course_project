@@ -1,7 +1,1 @@
-{
-    "Modules": [
-        {"Key": "", "Source": "", "Dir": "."},
-        {"Key": "ecr_image", "Source": "./modules/ecr", "Dir": "modules/ecr"},
-        {"Key": "s3_bucket", "Source": "./modules/s3", "Dir": "modules/s3"},
-    ]
-}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"ecr_image","Source":"./modules/ecr","Dir":"modules/ecr"},{"Key":"s3_bucket","Source":"./modules/s3","Dir":"modules/s3"}]}

@@ -1,3 +1,4 @@
+import os
 import json
 import pickle
 import pathlib
@@ -17,12 +18,14 @@ from prefect.artifacts import create_markdown_artifact
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction import DictVectorizer
 
+s3_bucket = os.getenv("S3_BUCKET")
+
 
 @task(retries=3, retry_delay_seconds=2)
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
-    # df = pd.read_csv(f"s3://mlops-course-project/data/{filename}", low_memory=False)
-    df = pd.read_csv(f"data/{filename}", low_memory=False)
+    df = pd.read_csv(f"s3://{s3_bucket}/data/{filename}", low_memory=False)
+    # df = pd.read_csv(f"data/{filename}", low_memory=False)
 
     return df
 
@@ -117,15 +120,15 @@ def train_best_model(
         markdown__rmse_report = f"""# RMSE Report
 
         ## Summary
-        
-        Duration Prediction 
-        
+
+        Duration Prediction
+
         ## RMSE XGBoost Model
-        
+
         | Date    | RMSE |
         |:----------|-------:|
         | {date.today()} | {rmse:.2f} |
-        
+
         """
         create_markdown_artifact(
             key="airbnb-price-report", markdown=markdown__rmse_report

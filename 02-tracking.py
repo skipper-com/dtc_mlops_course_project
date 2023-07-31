@@ -1,6 +1,7 @@
 """
 Tracking experiments module
 """
+import os
 import pickle
 
 import s3fs
@@ -25,11 +26,13 @@ mlflow.set_tracking_uri("http://127.0.0.1:5000")
 mlflow.set_experiment("airbnb-price-experiment")
 client = MlflowClient("http://127.0.0.1:5000")
 
+s3_bucket = os.getenv("S3_BUCKET")
+
 
 def read_data(filename: str) -> pd.DataFrame:
     """Read data into DataFrame"""
-    # df = pd.read_csv(f"s3://mlops-course-project/data/{filename}", low_memory=False)
-    df = pd.read_csv(f"data/{filename}", low_memory=False)
+    df = pd.read_csv(f"s3://{s3_bucket}/data/{filename}", low_memory=False)
+    # df = pd.read_csv(f"data/{filename}", low_memory=False)
     return df
 
 

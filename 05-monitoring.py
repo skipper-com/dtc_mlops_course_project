@@ -1,3 +1,4 @@
+import os
 import pickle
 import logging
 
@@ -10,6 +11,8 @@ from prefect import flow, task
 from evidently import ColumnMapping
 from evidently.report import Report
 from evidently.metrics import ColumnDriftMetric, DatasetDriftMetric
+
+s3_bucket = os.getenv("S3_BUCKET")
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s]: %(message)s"
@@ -24,9 +27,9 @@ create table price_prediction(
 )
 """
 
-categorical = ['neighbourhood', 'room_type']
-numerical = ['availability_365']
-target = ['price']
+categorical = ["neighbourhood", "room_type"]
+numerical = ["availability_365"]
+target = ["price"]
 
 column_mapping = ColumnMapping(
     prediction="prediction",
@@ -41,18 +44,16 @@ report = Report(
 
 
 def get_data():
-    df = pd.read_csv(
-        's3://mlops-course-project/data/NYC-Airbnb-2023.csv', low_memory=False
-    )
+    df = pd.read_csv(f"s3://{s3_bucket}/data/NYC-Airbnb-2023.csv", low_memory=False)
     df = df[df.price <= df.price.quantile(q=0.95)]
     df = df[categorical + numerical + target]
     df[categorical] = df[categorical].astype(str)
 
     reference_data = df[:20000]
-    reference_data['bin'] = 1
+    reference_data["bin"] = 1
     new_data = np.array_split(df[20000:], 10)
     for i in range(2, 12):
-        new_data[i - 2]['bin'] = i
+        new_data[i - 2]["bin"] = i
 
     return (reference_data, new_data)
 
@@ -96,7 +97,7 @@ def calculate_metrics(curr, reference_df, df):
 
     result = report.as_dict()
 
-    bin = df['bin'].iloc[0]
+    bin = df["bin"].iloc[0]
     prediction_drift = result["metrics"][0]["result"]["drift_score"]
     num_drifted_columns = result["metrics"][1]["result"]["number_of_drifted_columns"]
 

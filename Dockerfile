@@ -22,8 +22,8 @@ COPY [ "04-deploy.py", "./" ]
 
 RUN echo $x1
 
-RUN aws s3 cp s3://mlops-course-project/mlflow/2/$x3/artifacts/models_pickle/lin_reg.bin .
-RUN aws s3 cp s3://mlops-course-project/mlflow/2/$x3/artifacts/preprocessor/preprocessor.b .
+RUN aws s3 cp s3://$S3_BUCKET/mlflow/2/$x3/artifacts/models_pickle/lin_reg.bin .
+RUN aws s3 cp s3://$S3_BUCKET/mlflow/2/$x3/artifacts/preprocessor/preprocessor.b .
 
 EXPOSE 9696
 
