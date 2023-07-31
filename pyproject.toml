@@ -28,11 +28,16 @@ force-exclude = '''
 /(
     scripts
 | integraton-test
+| \.terraform
 )/
 | pyproject\.toml
 | Dockerfile
 | Makefile
 | README.md
+| main\.tf
+| variables\.tf
+| \.gitignore
+| \.terraform\.lock\.hcl
 '''
 
 [tool.isort]

@@ -6,3 +6,4 @@
 .prefectignore
 mlartifacts/
 *.pyc
+.terraform/*
