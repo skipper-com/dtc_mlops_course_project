@@ -19,7 +19,9 @@ Imagine you're going to lease a private room or apt on Airbnb, but don't know th
 
 ## Excuses
 First of all, I want to ask for excuse for my poor English.
+
 Secondly, I sacrifice some automation for the presentation of material. I hardly tried to show and reveal detail of project alongside course topics, rather than put everything in 'black box'.
+
 Thirdly, I deliberately tried to omit code block from this project description and leave only explanations. I did it for clear narrative and easy reading. All code blocks or files referenced in text could be found in repo.
 
 # Problem description
