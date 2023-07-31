@@ -14,29 +14,29 @@
   - [Reproducibility](#reproducibility)
 
 # Introduction
-*The main goal of the project isn't to be useful but shows how good (or bad) I could use all learned technologies and methods in solid production environment. To be honest I choose very simple task and small dataset. Fortunately, I can come up with idea how to use results in my project.
-Imagine you're going to lease a private room or apt on Airbnb, but don't know the best price for a lease. My model can predict and offer you a price based on other listing parameters.*
+The main goal of the project isn't to be useful but shows how good (or bad) I could use all learned technologies and methods in solid production environment. To be honest I chose very simple task and small dataset. Fortunately, I can come up with idea how to use results in my project.
+Imagine you're going to lease a private room or apt on Airbnb, but don't know the best price for a lease. My model can predict and offer you a price based on other listing parameters.
 
 ## Excuses
-First of all, I want to ask for excuse for my poor English.
+*First of all, I want to ask for excuse for my poor English.
 
 Secondly, I sacrifice some automation for the presentation of material. I hardly tried to show and reveal detail of project alongside course topics, rather than put everything in 'black box'.
 
-Thirdly, I deliberately tried to omit code block from this project description and leave only explanations. I did it for clear narrative and easy reading. All code blocks or files referenced in text could be found in repo.
+Thirdly, I deliberately tried to omit code block from this project description and leave only explanations. I did it for clear narrative and easy reading. All code blocks or files referenced in text could be found in repo.*
 
 # Problem description
 ## Dataset
-For the project I choose [New York City Airbnb 2023, Public Data](https://www.kaggle.com/datasets/godofoutcasts/new-york-city-airbnb-2023-public-data) Airbnb listings and metrics in NYC from 2011 to 2023. Airbnb, Inc is an American San Francisco-based company operating an online marketplace for short- and long-term homestays and experiences. The company was founded in 2008 by Brian Chesky, Nathan Blecharczyk, and Joe Gebbia. Since it was founded in 2008, Airbnb has become one of the most successful and valuable start-ups in the world and has significantly impacted the HORECA (hotel, restaurant, and catering) industry. Airbnb is a platform that allows house and apartment owners to rent their properties to guests for short-term stays. Since 2011, hosts have been using Airbnb. This dataset describes the listing activity and metrics in NYC for 2023.
+For the project I chose [New York City Airbnb 2023, Public Data](https://www.kaggle.com/datasets/godofoutcasts/new-york-city-airbnb-2023-public-data) Airbnb listings and metrics in NYC from 2011 to 2023. Airbnb, Inc is an American San Francisco-based company operating an online marketplace for short- and long-term homestays and experiences. The company was founded in 2008 by Brian Chesky, Nathan Blecharczyk, and Joe Gebbia. Since it was founded in 2008, Airbnb has become one of the most successful and valuable start-ups in the world and has significantly impacted the HORECA (hotel, restaurant, and catering) industry. Airbnb is a platform that allows house and apartment owners to rent their properties to guests for short-term stays. Since 2011, hosts have been using Airbnb. This dataset describes the listing activity and metrics in NYC for 2023.
 
 ## Problem
-In this project I tried to create simple prediction model which takes most important parameters of Airbnb listing in NY and show most suitable price for listing. The project could be deployed as a service and works on a response|reply basis. During registration of listing to lease my service (project) will predict the best price for owner and hint in price field on site.
+In this project I tried to create simple prediction model which takes most important parameters of Airbnb listing in NY and show most suitable price for listing. The project could be deployed as a service and works on a response/reply basis. During registration of listing to lease my service (project) will predict the best price for owner and hint in price field on site.
 
 # Technologies used in projects:
-- Cloud: for the project I choose AWS cloud for time save reason. I have experience with GCP, AWS and Yandex Cloud and usually preferred GCP not accidentally. But it could take lot of time to re-write all scripts for GCP.
+- Cloud: for the project I chose AWS cloud for time save reason. I have experience with GCP, AWS and Yandex Cloud and usually preferred GCP. But it could take lot of time to re-write all course scripts for GCP.
 - Model tracking: I chose MLFlow because it looks like standard in MLOps
-- Orchestration: I choose Prefect as a lightweight and easy tool to orchestrate jobs and tasks. My favorite tool for orchestration is Airflow, but it much more complex and requires lots of time to deploy and start.
+- Orchestration: I chose Prefect as a lightweight and easy tool to orchestrate jobs and tasks. My favorite tool for orchestration is Airflow, but it much more complex and requires lots of time to deploy and start.
 - Monitoring: Evidently.ai easy and powerful tool perfectly suitable for project like this
-- Best practice and CI/CD: for best practice I used isort, pylint, black and make file. There are plans to implement Gitlab for CI/CD but I faced lack of time.
+- Best practice and CI/CD: for best practice I used isort, pylint, black and make file. There were plans to implement Gitlab for CI/CD but I faced lack of time.
 - IaC: Terraform as a popular IaC tool, I decided not to argue with the community:)
 
 # Model
@@ -54,7 +54,7 @@ The first model for baseline implemented in 01-model.py file. Baseline set by th
 MSE is around 70 for all train/val/test.
 
 # Experiments tracking and model registry
-Next I conducted lots of experiments with different models and hyper parameters of models to choose the best one. On this step I use MLFlow with local DB and local artifacts storage (02-tracking.py).
+Next I conducted lots of experiments with different models and hyper parameters of models to chose the best one. On this step I use MLFlow with local DB and local artifacts storage (02-tracking.py).
 1. Start local MLFlow server with ```bash mlflow server --backend-store-uri sqlite:///mlflow.db```
 2. Repeat all 01-model.py file to set baseline in MLFlow
 3. Re-create train/val datasets to exclude test
@@ -69,11 +69,12 @@ Lowest RMSE is about 70.5 with XGBoost model and best params =
 - reg_alpha	0.030220138602381437
 - reg_lambda 0.0758045390119753
 - seed	42
+
 I think it's enough for training and model are ready to production. Now it's possible to register model, make artifacts publicly available and start service.
 
 # Workflow Orchestration
 Now I have the best model with hyperparametres. Then I can create pipeline to train best model and store artifacts is S3 bucket for further use (03-orchestration.py).
-1. Re-create all training steps for best model from [Experiment tracking and model registry](experiment-tracking-and-model-registry)
+1. Re-create all training steps for best model from [Experiment tracking and model registry](experiment-tracking-and-model-registry).
 2. Set new experiment to place artifacts in S3 bucket.
 3. Start MLFlow server with command ```bash mlflow server --backend-store-uri=sqlite:///mlflow.db --default-artifact-root="s3://mlops-course-project/mlflow/"```
 4. Start prefect server (```bash prefect server start```).
@@ -106,7 +107,7 @@ Model monitoring is also very important part of MLOps project. Maybe most import
 - prediction drift
 - and model quality
 3. Next step is to build simple monitoring tool to get drifted data. I used docker compose to run PostgreSQL + Adminer + Grafana with command ```bash sudo docker compose up -d``` to prepare environment for monitoring.
-4. When the service works constantly in production initial dataset could be used as reference, then all prediction requests would be dataset to check against reference. Requests could be packed in batch (for a day or for thousand examples) depending on requests per day. I choose reference dataset as first 20 000 records of Airbnb data and simulate 10 batches (binned records) from remaining records.
+4. When the service works constantly in production initial dataset could be used as reference, then all prediction requests would be dataset to check against reference. Requests could be packed in batch (for a day or for thousand examples) depending on requests per day. I chose reference dataset as first 20 000 records of Airbnb data and simulate 10 batches (binned records) from remaining records.
 5. Then I calculate drift metrics using evidently (05-monitoring.py) and put them in database.
 6. Last but not least I created a dashboard in Grafana to show drifted prediction and number of drifted columns.
 
@@ -125,6 +126,7 @@ All main ideas from course in code files. I want to notice only some points:
 
 # IaC
 To be honest IaC section is more about what I could done more but I hadn't time for it. I create Terraform files to create bucket and ECR registry. This is enough to start, but not enough for project deployment.
+
 For project deployment Terraform should also include ECS, Fargate, IAM and VPC and CI/CD also. Unfortunately, I couldn't fix all automation properties and enable CI/CD pipeline.
 
 # Reproducibility
